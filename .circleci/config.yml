@@ -6,6 +6,6 @@ version: 2.1
 workflows:
   app-tests:
     jobs:
-      build:
-        name: npm build
+      - node/test
+      steps:
         command: npm build
