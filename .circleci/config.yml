@@ -12,6 +12,8 @@ commands:
     steps:
       - install
       - run: npm test
+      - store_test_results:
+        path: test-results
   start:
     steps:
       - install
@@ -41,6 +43,6 @@ jobs:
 workflows:
   installation:
     jobs:
-      - start-jobs
-      - build
+      # - start-jobs
+      # - build
       - start
