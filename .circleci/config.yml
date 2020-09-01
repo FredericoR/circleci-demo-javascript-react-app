@@ -35,8 +35,8 @@ jobs:
     executor: docker-executor
     steps:
       - run: npm test
-      # - store_test_results:
-      #   path: ./test-results/jest/
+      - store_test_results:
+          path: ./test-results/jest/
   start:
     executor: docker-executor
     steps:
@@ -55,3 +55,4 @@ workflows:
           filters:
             branches:
               only: master
+          
