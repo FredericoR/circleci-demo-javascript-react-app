@@ -1,4 +1,21 @@
 version: 2.1
+commands:
+  install:
+    steps:
+      - checkout
+      - run: npm install
+  build:
+    steps:
+      - install
+      - run: npm build
+  test:
+    steps:
+      - install
+      - run: npm test
+  start:
+    steps:
+      - install
+      - run: npm start
 
 executors:
   docker-executor:
@@ -6,40 +23,35 @@ executors:
       - image: node:14
 
 jobs:
+  start-jobs:
+    executor: docker-executor
+    steps:
+      - install
   build:
     executor: docker-executor
     steps:
-      - checkout
-      - run:
-          name: Installing Dependencies
-          command: npm install
+      - install
   test:
     executor: docker-executor
     steps:
-      - run:
-          name: Running Tests
-          command: npm test
+      - run: npm test
+      # - store_test_results:
+      #   path: ./test-results/jest/
+  start:
+    executor: docker-executor
+    steps:
+      # - install
+      - test
+      - start
 
 workflows:
-  build:
+  installation:
     jobs:
+      # - start-jobs
       - build
-  test:
-    jobs:
-      - build
-      - test:
+      - start:
           requires:
-          - build
-# jobs:
-#   build:
-#     docker:
-#       - image: <image-name-tag>
-#     steps:
-#       - checkout # Special step to checkout your source code
-#       - run: # Run step to execute commands, see
-#       # circleci.com/docs/2.0/configuration-reference/#run
-#           name: Running tests
-#           command: make test # executable command run in
-#           # non-login shell with /bin/bash -eo pipefail option
-#           # by default.
-# #...          
+            - build
+          filters:
+            branches:
+              only: master

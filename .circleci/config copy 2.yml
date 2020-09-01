@@ -1,21 +1,5 @@
+
 version: 2.1
-commands:
-  install:
-    steps:
-      - checkout
-      - run: npm install
-  build:
-    steps:
-      - install
-      - run: npm build
-  test:
-    steps:
-      - install
-      - run: npm test
-  start:
-    steps:
-      - install
-      - run: npm start
 
 executors:
   docker-executor:
@@ -23,35 +7,27 @@ executors:
       - image: node:14
 
 jobs:
-  start-jobs:
-    executor: docker-executor
-    steps:
-      - install
   build:
     executor: docker-executor
     steps:
-      - install
+      - checkout
+      - run:
+          name: Installing Dependencies
+          command: npm install
   test:
     executor: docker-executor
     steps:
-      - run: npm test
-      # - store_test_results:
-      #   path: ./test-results/jest/
-  start:
-    executor: docker-executor
-    steps:
-      - install
-      - test
-      - start
+      - run:
+          name: Running Tests
+          command: npm test
 
 workflows:
-  installation:
+  build:
     jobs:
-      # - start-jobs
-      # - build
-      - start:
-        requires:
+      - build
+  test:
+    jobs:
+      - build
+      - test:
+          requires:
           - build
-        filters:
-          branches:
-            only: master
