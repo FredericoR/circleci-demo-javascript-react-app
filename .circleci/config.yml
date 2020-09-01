@@ -7,3 +7,6 @@ workflows:
   app-tests:
     jobs:
       - node/test
+      build:
+        name: npm build
+        command: npm build
