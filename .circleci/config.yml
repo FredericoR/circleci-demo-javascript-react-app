@@ -1,11 +1,21 @@
-orbs:
-  node: circleci/node@4.0.0
-
 version: 2.1
 
-workflows:
-  app-tests:
-    jobs:
-      - node/test
-      steps:
-        command: npm build
+jobs:
+  build:
+    docker:
+      - image: node:alpine
+    working_directory: /usr/src/app
+    steps:
+        - checkout
+        - run:
+            name: Hello world
+            command: echo "Hello world"
+        - run:
+          name: Code Has Arrived
+          command: |
+            ls -al
+            echo '^^^That should look familiar^^^'
+        - run:
+          name: Npm build
+          command: npm build
+    
