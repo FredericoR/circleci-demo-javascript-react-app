@@ -23,8 +23,13 @@ jobs:
     executor: docker-executor
     steps:
       - install
+  build:
+    executor: docker-executor
+    steps:
+      - install
 
 workflows:
   installation:
     jobs:
       - start-jobs
+      - build
