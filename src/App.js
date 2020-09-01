@@ -13,6 +13,7 @@ class App extends Component {
       <Layout>
         <Header title="Baby Hippo Gram"/>
         <Container>
+          <p>Hello</p>
           <Card cards={ this.state.cards } />
         </Container>
       </Layout>

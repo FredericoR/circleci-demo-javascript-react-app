@@ -8,6 +8,10 @@ commands:
     steps:
       - install
       - run: npm build
+  test:
+    steps:
+      - install
+      - run: npm test
   start:
     steps:
       - install
@@ -16,7 +20,7 @@ commands:
 executors:
   docker-executor:
     docker:
-      - image: node:alpine
+      - image: node:14
 
 jobs:
   start-jobs:
@@ -27,9 +31,16 @@ jobs:
     executor: docker-executor
     steps:
       - install
+  start:
+    executor: docker-executor
+    steps:
+      - install
+      - test
+      - start
 
 workflows:
   installation:
     jobs:
       - start-jobs
       - build
+      
