@@ -9,8 +9,6 @@ import Card from './Componets/Card';
 
 class App extends Component {
   render() {
-    const a = undefined;
-    if (a === undefined) throw new Error();
     return (
       <Layout>
         <Header title="Baby Hippo Gram"/>

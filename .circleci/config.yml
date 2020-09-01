@@ -1,46 +1,26 @@
 version: 2.1
-commands:
-  install:
-    steps:
-      - checkout
-      - run: npm install
-  build:
-    steps:
-      - install
-      - run: npm build
-  test:
-    steps:
-      - install
-      - run: npm test
-  start:
-    steps:
-      - install
-      - run: npm start
-
-executors:
-  docker-executor:
-    docker:
-      - image: node:14
 
 jobs:
-  start-jobs:
-    executor: docker-executor
-    steps:
-      - install
   build:
-    executor: docker-executor
+    docker:
+      - image: node:14
     steps:
-      - install
-  start:
-    executor: docker-executor
-    steps:
-      - install
-      - test
-      - start
+      - checkout
+      - run:
+          name: Running Tests
+          command: npm test
 
-workflows:
-  installation:
-    jobs:
-      # - start-jobs
-      # - build
-      - start
+#         #...
+# jobs:
+#   build:
+#     docker:
+#       - image: <image-name-tag>
+#     steps:
+#       - checkout # Special step to checkout your source code
+#       - run: # Run step to execute commands, see
+#       # circleci.com/docs/2.0/configuration-reference/#run
+#           name: Running tests
+#           command: make test # executable command run in
+#           # non-login shell with /bin/bash -eo pipefail option
+#           # by default.
+# #...          
