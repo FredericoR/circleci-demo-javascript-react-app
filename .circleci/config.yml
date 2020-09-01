@@ -4,14 +4,14 @@ commands:
     steps:
       - checkout
       - run: npm install
-  # build:
-  #   steps:
-  #     - install
-  #     - run: npm build
-  # start:
-  #   steps:
-  #     - install
-  #     - run: npm start
+  build:
+    steps:
+      - install
+      - run: npm build
+  start:
+    steps:
+      - install
+      - run: npm start
 
 executors:
   docker-executor:
@@ -24,7 +24,7 @@ jobs:
     steps:
       - install
 
-workflow:
+workflows:
   installation:
     jobs:
       - start-jobs
