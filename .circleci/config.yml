@@ -1,32 +1,30 @@
 version: 2.1
-jobs:
+commands:
+  install:
+    steps:
+      - checkout
+      - run: npm install
   build:
-    docker:
-      - image: node:alpine
     steps:
-      - checkout
-      - run:
-          name: The First Step
-          command: |
-            echo 'Hello World!'
-            echo 'This is the delivery pipeline'
-      - run:
-          name: npm install
-          command: |
-            npm install
+      - install
+      - run: npm build
   run:
+    steps:
+      - install
+      - run: npm start
+
+executors:
+  docker-executor:
     docker:
       - image: node:alpine
+
+jobs:
+  start-jobs:
+    executor: docker-executor
     steps:
-      - checkout
-      - run:
-          name: pwd
-          command: pwd
-      - run:
-          name: npm start
-          command: |
-            npm start
-      - run:
-          name: npm start
-          command: |
-            npm start
+      - install
+
+workflow:
+  install:
+    jobs:
+      - start-jobs

@@ -1,0 +1,32 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: node:alpine
+    steps:
+      - checkout
+      - run:
+          name: The First Step
+          command: |
+            echo 'Hello World!'
+            echo 'This is the delivery pipeline'
+      - run:
+          name: npm install
+          command: |
+            npm install
+  run:
+    docker:
+      - image: node:alpine
+    steps:
+      - checkout
+      - run:
+          name: pwd
+          command: pwd
+      - run:
+          name: npm start
+          command: |
+            npm start
+      - run:
+          name: npm start
+          command: |
+            npm start
