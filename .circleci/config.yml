@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: alpine:3.7
+      - image: node:alpine
     steps:
       - checkout
       - run:
@@ -11,7 +11,6 @@ jobs:
             echo 'Hello World!'
             echo 'This is the delivery pipeline'
       - run:
-          name: Code Has Arrived
+          name: npm install
           command: |
-            ls -al
-            echo '^^^That should look familiar^^^'
+            npm install
