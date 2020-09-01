@@ -8,7 +8,7 @@ commands:
     steps:
       - install
       - run: npm build
-  run:
+  start:
     steps:
       - install
       - run: npm start
