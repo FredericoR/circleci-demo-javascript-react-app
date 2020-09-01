@@ -1,16 +1,35 @@
 version: 2.1
 
-jobs:
-  build:
+executors:
+  docker-executor:
     docker:
       - image: node:14
+
+jobs:
+  build:
+    executor: docker-executor
     steps:
       - checkout
+      - run:
+          name: Installing Dependencies
+          command: npm install
+  test:
+    executor: docker-executor
+    steps:
       - run:
           name: Running Tests
           command: npm test
 
-#         #...
+workflows:
+  build:
+    jobs:
+      - build
+  test:
+    jobs:
+      - build
+      - test:
+          requires:
+          - build
 # jobs:
 #   build:
 #     docker:
