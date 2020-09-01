@@ -43,4 +43,4 @@ workflows:
     jobs:
       - start-jobs
       - build
-      
+      - start
