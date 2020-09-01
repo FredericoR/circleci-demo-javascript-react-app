@@ -12,8 +12,6 @@ commands:
     steps:
       - install
       - run: npm test
-      - store_test_results:
-        path: test-results
   start:
     steps:
       - install
