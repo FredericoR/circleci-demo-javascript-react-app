@@ -10,6 +10,7 @@ commands:
       - run: npm build
   build-docker-image:
     steps:
+      - setup_remote_docker
       - run:
           name: Build Docker Image
           command: docker build -t $IMAGE_NAME
