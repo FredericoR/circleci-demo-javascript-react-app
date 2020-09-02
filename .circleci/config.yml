@@ -46,7 +46,6 @@ jobs:
       - install
   build-docker-image:
     executor: docker-executor
-    working_directory: /usr/src/app
     environment:
       IMAGE_NAME: fredericor/initial:node-test-from-circleci
     steps:
@@ -54,7 +53,6 @@ jobs:
       - build-docker-image
   deploy-to-docker-hub:
     executor: docker-executor
-    working_directory: /usr/src/app
     environment:
       IMAGE_NAME: fredericor/initial:node-test-from-circleci
     steps:
