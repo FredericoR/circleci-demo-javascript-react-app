@@ -8,6 +8,17 @@ commands:
     steps:
       - install
       - run: npm build
+  build-docker-image:
+    steps:
+      - run:
+          name: Build Docker Image
+          command: docker build -t $IMAGE_NAME
+  deploy-to-docker-hub:
+    steps:
+      - run:
+          name: Publish Docker Image to Docker Hub
+          command: echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin && docker push $IMAGE_NAME
+
   test:
     steps:
       - install
@@ -31,6 +42,21 @@ jobs:
     executor: docker-executor
     steps:
       - install
+  build-docker-image:
+    executor: docker-executor
+    working_directory: /usr/src/app
+    environment:
+      IMAGE_NAME: fredericor/initial:node-test-from-circleci
+    steps:
+      - install
+      - build-docker-image
+  deploy-to-docker-hub:
+    executor: docker-executor
+    working_directory: /usr/src/app
+    environment:
+      IMAGE_NAME: fredericor/initial:node-test-from-circleci
+    steps:
+      - deploy-to-docker-hub
   test:
     executor: docker-executor
     steps:
@@ -47,7 +73,6 @@ jobs:
 workflows:
   installation:
     jobs:
-      # - start-jobs
       - build
       - start:
           requires:
@@ -55,4 +80,10 @@ workflows:
           filters:
             branches:
               only: master
+  build-and-deploy:
+    jobs:
+      - build-docker-image
+      - deploy-to-docker-hub:
+          requires:
+            - build-docker-image
           
