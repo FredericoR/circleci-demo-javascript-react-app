@@ -12,8 +12,11 @@ commands:
     steps:
       - setup_remote_docker
       - run:
+          name: Check contents of dir before building an image
+          command: docker build -t $IMAGE_NAME .
+      - run:
           name: Build Docker Image
-          command: docker build -t $IMAGE_NAME
+          command: docker build -t $IMAGE_NAME .
   deploy-to-docker-hub:
     steps:
       - setup_remote_docker
